@@ -7,7 +7,7 @@
 			<form action="">
 				<label class="app-form__field">
 					<span class="app-form__caption">Сумма инвестиции</span>
-					<sum-invest-input />
+					<sum-invest-input :sum="100" />
 				</label>
 				<label class="app-form__field">
 					<span class="app-form__caption">Мультипликатор</span>

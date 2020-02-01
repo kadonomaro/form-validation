@@ -6,8 +6,8 @@
       v-model="rangeSliderValue"
        @focus="isRangeVisible = true" 
     />
-    <span class="mult-invest-sum">= $ {{ factSum }}</span>
-    <div v-if="isRangeVisible" class="mult-invest-range">
+    <span class="mult-invest-sum">= $ {{ factSum * rangeSliderValue }}</span>
+    <div v-if="isRangeVisible" v-escape="closeRange" class="mult-invest-range">
       <input
         class="mult-invest-range__slider"
         type="range"
@@ -41,6 +41,11 @@ export default {
       isRangeVisible: false,
       rangeSliderValue: 1
     };
+  },
+  methods: {
+    closeRange() {
+      this.isRangeVisible = false;
+    }
   }
 };
 </script>
