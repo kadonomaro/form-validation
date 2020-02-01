@@ -13,6 +13,25 @@
 					<span class="app-form__caption">Мультипликатор</span>
 					<mult-invest-input :sum="investSum" />
 				</label>
+
+				<span 
+					class="app-form__spoiler-toggle"
+					:class="{'app-form__spoiler-toggle--active': isActiveSpoiler}"
+					@click="spoilerToggle"
+				>Ограничить прибыль и убыток</span>
+				<transition name="slide-down">
+					<div class="app-form__spoiler" v-if="isActiveSpoiler">
+						<label class="app-form__field">
+							<span class="app-form__caption">Сумма инвестиции</span>
+							<sum-invest-input @changeValue="changeValue" />
+						</label>
+						<label class="app-form__field">
+							<span class="app-form__caption">Мультипликатор</span>
+							<mult-invest-input :sum="investSum" />
+						</label>
+					</div>
+				</transition>
+
 			</form>
 		</div>
 	</div>
@@ -33,7 +52,8 @@ export default {
 	},
 	data() {
 		return {
-			investSum: 5000
+			investSum: 5000,
+			isActiveSpoiler: false
 		}
 	},
 	methods: {
@@ -42,6 +62,9 @@ export default {
 			if (this.investSum > 200000) {
 				this.investSum = 200000;
 			}
+		},
+		spoilerToggle(){
+			this.isActiveSpoiler = !this.isActiveSpoiler;
 		}
  	}
 }
@@ -70,11 +93,47 @@ export default {
 			align-items: center;
 			margin-bottom: 8px;
 		}
+		&__spoiler-toggle {
+			position: relative;
+			display: block;
+			margin-top: 25px;
+			color: #909294;
+			font-size: 13px;
+			cursor: pointer;
+			&::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: -15px;
+				width: 5px;
+				height: 5px;
+				border: solid #909294;
+				border-width: 2px 2px 0 0;
+				transform: translateY(50%) rotate(45deg);
+				transition: transform 0.2s ease-in;
+			}
+		}
+		&__spoiler-toggle--active {
+			&::before {
+				transform: translateY(40%) rotate(135deg);
+			}
+		}
+		&__spoiler {
+			padding-top: 20px;
+		}
 		&__caption {
 			display: block;
 			margin-right: 5px;
 			font-size: 13px;
 			font-weight: bold;
 		}
+
+		.slide-down-enter-active, .slide-down-leave-active {
+			transition: opacity .5s;
+		}
+		.slide-down-enter, .slide-down-leave-to {
+			opacity: 0;
+		}
+
 	}
 </style>

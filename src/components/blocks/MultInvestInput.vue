@@ -7,7 +7,11 @@
       @input="updateMultiplyValue(+$event.target.value)"
       @focus="isRangeVisible = true" 
     />
-    <span class="mult-invest-sum">= $ {{ sum * multiplyValue || 0 }}</span>
+    <span 
+      class="mult-invest-sum" 
+      :class="{'mult-invest-sum--small': isLong}"
+      >= $ {{ sum * multiplyValue || 0 }}
+    </span>
     <div v-if="isRangeVisible" v-escape="close" class="mult-invest-range">
       <input
         class="mult-invest-range__slider"
@@ -56,6 +60,11 @@ export default {
       }
       this.multiplyValue = +value.toString().replace(/[A-Z a-z]/g, '');
     }
+  },
+  computed: {
+    isLong() {
+      return (this.sum * this.multiplyValue).toString().length > 6;
+    }
   }
 };
 </script>
@@ -71,8 +80,14 @@ export default {
   color: #909294;
   font-size: 13px;
 }
+
+.mult-invest-sum--small {
+  font-size: 11px;
+}
+
 .mult-invest-range {
   position: absolute;
+  z-index: 99;
   bottom: -63px;
   left: -150px;
   width: 280px;
