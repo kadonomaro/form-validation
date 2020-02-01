@@ -7,7 +7,7 @@
 				@change="disabled = !disabled"
 			>
 			<span class="limit-value__checkbox-custom"></span>
-			<span class="limit-value__title">{{title}}</span>
+			<span class="limit-value__title">{{ title }}</span>
 		</label>
 		<label class="input-label" :data-sign="setSign">
 			<input 
@@ -27,7 +27,7 @@
 				></button>
 				<button 
 					class="limit-value__button limit-value__button--down" 
-					:class="{'limit-value__button--disabled': disabled}"
+					:class="{ 'limit-value__button--disabled': disabled }"
 					:disabled="disabled"
 					@click.prevent="decreaseValue"
 				></button>
@@ -114,7 +114,6 @@ export default {
 					this.value = (this.initialValue * 0.3).toFixed(2);
 				}
 			}
-			
 		}
 	}
 };

@@ -2,7 +2,7 @@
   <button 
     class="send-button"
     :class="buttonType ? 'send-button--' + buttonType : ''"
-  ><span class="send-button__inner">{{title}}</span></button>
+  ><span class="send-button__inner">{{ title }}</span></button>
 </template>
 
 <script>

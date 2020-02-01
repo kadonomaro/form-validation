@@ -90,6 +90,13 @@ export default {
 			investSum: 5000,
 			currentLimitType: 'dollar',
 			isActiveSpoiler: false,
+			formData: {
+				sumInv: 5000,
+				mult: 0,
+				takeProfit: 0,
+				stopLoss: 0,
+				direction: ''
+			}
 		}
 	},
 	methods: {
@@ -121,6 +128,7 @@ export default {
 			color: #3a3b3c;
 			font-family: 'Roboto', sans-serif;
 			font-size: 16px;
+			font-weight: 500;
 			border-bottom: 1px solid #e0e2e4;
 		}
 		&__body {

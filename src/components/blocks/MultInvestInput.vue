@@ -1,11 +1,16 @@
 <template>
   <label class="input-label" data-sign="x">
     <input 
-      class="input mult-invest-input" 
+      class="input mult-invest-input"
+      :class="{ 'input--error': !isValid }"
       type="text" 
       v-model="multiplyValue"
       @input="updateMultiplyValue(+$event.target.value)"
       @focus="isRangeVisible = true" 
+    />
+    <app-tooltip 
+      :message="'Неверное значение мультипликатора'"
+      :isActive="!isValid"
     />
     <span 
       class="mult-invest-sum" 
@@ -34,8 +39,13 @@
 </template>
 
 <script>
+import AppTooltip from '@/components/blocks/AppTooltip.vue';
+
 export default {
   name: "MultInvestInput",
+  components: {
+    AppTooltip
+  },
   props: {
     sum: {
       type: Number,
@@ -45,7 +55,8 @@ export default {
   data() {
     return {
       isRangeVisible: false,
-      multiplyValue: 40
+      multiplyValue: 40,
+      isValid: true
     };
   },
   methods: {
@@ -53,8 +64,8 @@ export default {
       this.isRangeVisible = false;
     },
     updateMultiplyValue(value) {
-      if (value < 1) {
-        value = 1;
+      if (value < 0) {
+        value = 0;
       } else if (value > 99) {
         value = 99;
       }
@@ -64,6 +75,15 @@ export default {
   computed: {
     isLong() {
       return (this.sum * this.multiplyValue).toString().length > 6;
+    }
+  },
+  watch: {
+    multiplyValue() {
+      if (this.multiplyValue < 1 || this.multiplyValue > 40) {
+        this.isValid = false;
+      } else {
+        this.isValid = true;
+      }
     }
   }
 };
@@ -177,8 +197,8 @@ input[type="range"]::-moz-range-track {
 input[type="range"]::-moz-range-thumb {
   box-shadow: 0px 0px 0px #000000;
   border: 6px solid $range-thumb-border;
-  height: $range-thumb-height;
-  width: $range-thumb-width;
+  height: 10px;
+  width: 10px;
   border-radius: $range-thumb-radius;
   background: $range-thumb-bg;
   cursor: pointer;

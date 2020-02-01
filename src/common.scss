@@ -56,6 +56,9 @@ body {
 }
 .input--error {
   border-color: #e64545;
+  &:focus {
+    border-color: #e64545;
+  }
 }
 .input--disabled {
   opacity: 0.5;
