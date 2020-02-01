@@ -6,13 +6,12 @@
 		<div class="app-form__body">
 			<form action="">
 				<div class="app-form__field">
-					<label class="input-label" data-sign="$">
-						<input type="text" name="" id="" class="input">
-					</label>
-					
+					<span class="app-form__caption">Сумма инвестиции</span>
+					<sum-invest-input />
 				</div>
 				<div class="app-form__field">
-
+					<span class="app-form__caption">Мультипликатор</span>
+					<mult-invest-input :factSum="10000" />
 				</div>
 			</form>
 		</div>
@@ -20,9 +19,14 @@
 </template>
 
 <script>
+import SumInvestInput from '@/components/blocks/SumInvestInput.vue';
+import MultInvestInput from '@/components/blocks/MultInvestInput.vue';
+
 export default {
+	name: 'AppForm',
 	components: {
-		
+		SumInvestInput,
+		MultInvestInput
 	},
 	props: {
 
@@ -49,7 +53,19 @@ export default {
 			border-bottom: 1px solid #e0e2e4;
 		}
 		&__body {
-			padding: 20px 10px;
+			padding: 20px 23px 20px 30px;
+		}
+		&__field {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 8px;
+		}
+		&__caption {
+			display: block;
+			margin-right: 5px;
+			font-size: 13px;
+			font-weight: bold;
 		}
 	}
 </style>

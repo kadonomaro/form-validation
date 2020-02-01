@@ -9,7 +9,9 @@ body {
 
 .input-label {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-basis: 128px;
   &::before {
     content: attr(data-sign);
     position: absolute;
@@ -25,6 +27,7 @@ body {
 .input {
   display: block;
   padding: 5px 8px 5px 20px;
+  color: #242526;
   font-size: 13px;
   text-align: right;
   background-color: #ffffff;
