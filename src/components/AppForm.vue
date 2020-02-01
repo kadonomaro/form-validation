@@ -38,7 +38,7 @@
 							/>
 						</div>
 
-						<div class="app-form__field">
+						<div class="app-form__field app-form__field--indent">
 							<limit-value-input 
 								:title="'Убыток'"
 								:limitType="currentLimitType"
@@ -49,13 +49,13 @@
 					</div>
 				</transition>
 
-				<div class="app-form__field">
+				<div class="app-form__field app-form__field--inner-indent">
 					<send-button 
-						:type="'reduction'"
+						:buttonType="'reduction'"
 						:title="'В снижение'"
 					/>
 					<send-button 
-						:type="'growth'"
+						:buttonType="'growth'"
 						:title="'В рост'"
 					/>
 				</div>
@@ -112,7 +112,7 @@ export default {
 <style lang="scss">
 	.app-form {
 		width: 320px;
-		min-height: 368px;
+		min-height: 370px;
 		margin: 0 auto;
 		background-color: #ffffff;
 		box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.1);
@@ -135,13 +135,18 @@ export default {
 		&__field--indent {
 			margin-bottom: 12px;
 		}
+		&__field--inner-indent {
+			margin-bottom: 0;
+			padding-top: 10px;
+		}
 		&__spoiler-toggle {
 			position: relative;
 			display: block;
-			margin: 25px 0 20px;
+			margin: 25px 0 18px;
 			color: #909294;
 			font-size: 13px;
 			cursor: pointer;
+			user-select: none;
 			&::before {
 				content: '';
 				position: absolute;
@@ -172,7 +177,7 @@ export default {
 			transition: all 0.3s ease-in;
 		}
 		.slide-leave-active {
-			transition: all 0.3s cubic-bezier(0, 1, 0.5, 1);
+			transition: all 0.3s ease-in;
 		}
 		.slide-enter-to, .slide-leave {
 			max-height: 100px;
