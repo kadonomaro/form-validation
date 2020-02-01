@@ -7,11 +7,9 @@
       v-model="value"
     />
   </label>
-
 </template>
 
 <script>
-
 export default {
   name: 'SumInvestInput',
   data() {

@@ -16,6 +16,7 @@
 				type="text"
 				:disabled="disabled"
 				v-model="value"
+				@input="updateLimitValue(+$event.target.value)"
 			/>
 			<div class="limit-value__buttons">
 				<button 
@@ -55,8 +56,9 @@ export default {
 	data() {
 		return {
 			disabled: true,
-			value: this.initialValue * 0.3,
-			value: '',
+			value: 0,
+			percentValue: 0,
+			dollarValue: 0,
 			step: 10
 		}
 	},
@@ -73,14 +75,19 @@ export default {
 		},
 		increaseValue() {
 			this.value += this.step;
-
 		},
 		decreaseValue() {
 			this.value -= this.step;
 			if (this.value < 0) {
 				this.value = 0;
 			}
-		}
+		},
+    updateLimitValue(value) {
+      if (value < 0) {
+        value = 0;
+      }
+      this.value = +value.toString().replace(/[A-Z a-z]/g, '');	
+    }
 	},
 	computed: {
 		setSign() {
@@ -96,6 +103,16 @@ export default {
 				this.value = 30;
 				this.step = 1;
 			}
+		},
+		initialValue() {
+			if (this.limitType === 'dollar') {
+				if ((this.initialValue * 0.3) === parseInt((this.initialValue * 0.3), 10)) {
+					this.value = this.initialValue * 0.3;
+				} else {
+					this.value = (this.initialValue * 0.3).toFixed(2);
+				}
+			}
+			
 		}
 	}
 };
@@ -178,7 +195,6 @@ export default {
 				left: 50%;
 				border-style: solid;
 				border-width: 3px;
-
 			}
 		}
 		&__button--disabled {
