@@ -3,18 +3,20 @@
     <input 
       class="input mult-invest-input" 
       type="text" 
-      v-model="rangeSliderValue"
-       @focus="isRangeVisible = true" 
+      v-model="multiplyValue"
+      @input="updateMultiplyValue(+$event.target.value)"
+      @focus="isRangeVisible = true" 
     />
-    <span class="mult-invest-sum">= $ {{ factSum * rangeSliderValue }}</span>
-    <div v-if="isRangeVisible" v-escape="closeRange" class="mult-invest-range">
+    <span class="mult-invest-sum">= $ {{ sum * multiplyValue || 0 }}</span>
+    <div v-if="isRangeVisible" v-escape="close" class="mult-invest-range">
       <input
         class="mult-invest-range__slider"
         type="range"
         min="1"
         max="40"
         step="1"
-        v-model="rangeSliderValue"
+        @input="updateMultiplyValue(+$event.target.value)"
+        v-model="multiplyValue"
       />
       <div class="mult-invest-range__tick-list">
         <span class="mult-invest-range__tick" style="left: 0;">1</span>
@@ -31,7 +33,7 @@
 export default {
   name: "MultInvestInput",
   props: {
-    factSum: {
+    sum: {
       type: Number,
       required: true
     }
@@ -39,12 +41,20 @@ export default {
   data() {
     return {
       isRangeVisible: false,
-      rangeSliderValue: 1
+      multiplyValue: 40
     };
   },
   methods: {
-    closeRange() {
+    close() {
       this.isRangeVisible = false;
+    },
+    updateMultiplyValue(value) {
+      if (value < 1) {
+        value = 1;
+      } else if (value > 99) {
+        value = 99;
+      }
+      this.multiplyValue = +value.toString().replace(/[A-Z a-z]/g, '');
     }
   }
 };

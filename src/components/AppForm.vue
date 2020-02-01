@@ -7,11 +7,11 @@
 			<form action="">
 				<label class="app-form__field">
 					<span class="app-form__caption">Сумма инвестиции</span>
-					<sum-invest-input :sum="100" />
+					<sum-invest-input @changeValue="changeValue" />
 				</label>
 				<label class="app-form__field">
 					<span class="app-form__caption">Мультипликатор</span>
-					<mult-invest-input :factSum="10000" />
+					<mult-invest-input :sum="investSum" />
 				</label>
 			</form>
 		</div>
@@ -33,15 +33,24 @@ export default {
 	},
 	data() {
 		return {
-
+			investSum: 5000
 		}
-	}
+	},
+	methods: {
+		changeValue() {
+			this.investSum = +event.target.value;
+			if (this.investSum > 200000) {
+				this.investSum = 200000;
+			}
+		}
+ 	}
 }
 </script>
 
 <style lang="scss">
 	.app-form {
 		width: 320px;
+		min-height: 368px;
 		margin: 0 auto;
 		background-color: #ffffff;
 		box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.1);
