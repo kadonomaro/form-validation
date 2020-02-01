@@ -11,14 +11,25 @@
 		</label>
 		<label class="input-label" :data-sign="setSign">
 			<input 
-				class="input limit-value__input"
+				class="input input--button limit-value__input"
 				:class="{'input--disabled': disabled}"
 				type="text"
 				:disabled="disabled"
+				v-model="value"
 			/>
 			<div class="limit-value__buttons">
-				<button class="limit-value__button limit-value__button--up"></button>
-				<button class="limit-value__button limit-value__button--down"></button>
+				<button 
+					class="limit-value__button limit-value__button--up" 
+					:class="{'limit-value__button--disabled': disabled}"
+					:disabled="disabled"
+					@click.prevent="increaseValue"
+				></button>
+				<button 
+					class="limit-value__button limit-value__button--down" 
+					:class="{'limit-value__button--disabled': disabled}"
+					:disabled="disabled"
+					@click.prevent="decreaseValue"
+				></button>
 			</div>
   	</label>
 	</div>
@@ -35,20 +46,56 @@ export default {
     limitType: {
 			type: String,
 			required: true
+		},
+		initialValue: {
+			type: Number,
+			required: true
 		}
 	},
 	data() {
 		return {
 			disabled: true,
-			sign: '',
+			value: this.initialValue * 0.3,
+			value: '',
+			step: 10
 		}
 	},
+	mounted() {
+		this.setInitialValue();
+	},
 	methods: {
+		setInitialValue() {
+			if (this.limitType === 'dollar') {
+				this.value = this.initialValue * 0.3;
+			}	else {
+				this.value = 30;
+			}
+		},
+		increaseValue() {
+			this.value += this.step;
 
+		},
+		decreaseValue() {
+			this.value -= this.step;
+			if (this.value < 0) {
+				this.value = 0;
+			}
+		}
 	},
 	computed: {
 		setSign() {
 			return (this.limitType === 'dollar') ? '$' : '%';
+		}
+	},
+	watch: {
+		limitType() {
+			if (this.limitType === 'dollar') {
+				this.value = this.initialValue * 0.3;
+				this.step = 10;
+			}	else {
+				this.value = 30;
+				this.step = 1;
+			}
 		}
 	}
 };
@@ -104,6 +151,7 @@ export default {
 		}
 		&__input {
 			max-width: 128px;
+			padding-right: 20px;
 			box-sizing: border-box;
 		}
 		&__buttons {
@@ -132,6 +180,9 @@ export default {
 				border-width: 3px;
 
 			}
+		}
+		&__button--disabled {
+			opacity: 0.5;
 		}
 		&__button--up {
 			border-bottom-width: 0.5px;

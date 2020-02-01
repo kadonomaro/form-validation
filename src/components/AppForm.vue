@@ -23,13 +23,17 @@
 					<div class="app-form__spoiler" v-if="isActiveSpoiler">
 						<label class="app-form__field">
 							<span class="app-form__caption">Ограничения в</span>
-							<limit-types-input @limitsType="updateLimitType" />
+							<limit-types-input 
+								@limitsType="updateLimitType"
+								:limitType="currentLimitType"
+							/>
 						</label>
 
 						<div class="app-form__field">
 							<limit-value-input 
 								:title="'Прибыль'"
 								:limitType="currentLimitType"
+								:initialValue="investSum"
 							/>
 						</div>
 
@@ -37,6 +41,7 @@
 							<limit-value-input 
 								:title="'Убыток'"
 								:limitType="currentLimitType"
+								:initialValue="investSum"
 							/>
 						</div>
 					</div>

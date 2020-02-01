@@ -27,10 +27,16 @@
 
 <script>
 export default {
-  name: "LimitTypesInput",
+	name: "LimitTypesInput",
+	props: {
+		limitType: {
+			type: String,
+			required: false
+		}
+	},
   data() {
     return {
-      currentLimit: "dollar"
+      currentLimit: this.limitType || "dollar"
     };
   },
   methods: {
