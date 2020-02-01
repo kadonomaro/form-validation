@@ -22,12 +22,8 @@
 				<transition name="slide-down">
 					<div class="app-form__spoiler" v-if="isActiveSpoiler">
 						<label class="app-form__field">
-							<span class="app-form__caption">Сумма инвестиции</span>
-							<sum-invest-input @changeValue="changeValue" />
-						</label>
-						<label class="app-form__field">
-							<span class="app-form__caption">Мультипликатор</span>
-							<mult-invest-input :sum="investSum" />
+							<span class="app-form__caption">Ограничения в</span>
+							<limit-types-input @limitsType="updateLimitType" />
 						</label>
 					</div>
 				</transition>
@@ -40,12 +36,14 @@
 <script>
 import SumInvestInput from '@/components/blocks/SumInvestInput.vue';
 import MultInvestInput from '@/components/blocks/MultInvestInput.vue';
+import LimitTypesInput from '@/components/blocks/LimitTypesInput.vue';
 
 export default {
 	name: 'AppForm',
 	components: {
 		SumInvestInput,
-		MultInvestInput
+		MultInvestInput,
+		LimitTypesInput
 	},
 	props: {
 
@@ -53,7 +51,8 @@ export default {
 	data() {
 		return {
 			investSum: 5000,
-			isActiveSpoiler: false
+			limitCurrentType: 'dollar',
+			isActiveSpoiler: false,
 		}
 	},
 	methods: {
@@ -62,6 +61,9 @@ export default {
 			if (this.investSum > 200000) {
 				this.investSum = 200000;
 			}
+		},
+		updateLimitType() {
+			this.limitCurrentType = event.target.value;
 		},
 		spoilerToggle(){
 			this.isActiveSpoiler = !this.isActiveSpoiler;
