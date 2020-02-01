@@ -7,7 +7,7 @@
 			<form action="">
 				<label class="app-form__field">
 					<span class="app-form__caption">Сумма инвестиции</span>
-					<sum-invest-input @changeValue="changeValue" />
+					<sum-invest-input @changeValue="updateInvestSum" />
 				</label>
 				<label class="app-form__field">
 					<span class="app-form__caption">Мультипликатор</span>
@@ -25,6 +25,20 @@
 							<span class="app-form__caption">Ограничения в</span>
 							<limit-types-input @limitsType="updateLimitType" />
 						</label>
+
+						<div class="app-form__field">
+							<limit-value-input 
+								:title="'Прибыль'"
+								:limitType="currentLimitType"
+							/>
+						</div>
+
+						<div class="app-form__field">
+							<limit-value-input 
+								:title="'Убыток'"
+								:limitType="currentLimitType"
+							/>
+						</div>
 					</div>
 				</transition>
 
@@ -37,13 +51,15 @@
 import SumInvestInput from '@/components/blocks/SumInvestInput.vue';
 import MultInvestInput from '@/components/blocks/MultInvestInput.vue';
 import LimitTypesInput from '@/components/blocks/LimitTypesInput.vue';
+import LimitValueInput from '@/components/blocks/LimitValueInput.vue';
 
 export default {
 	name: 'AppForm',
 	components: {
 		SumInvestInput,
 		MultInvestInput,
-		LimitTypesInput
+		LimitTypesInput,
+		LimitValueInput
 	},
 	props: {
 
@@ -51,19 +67,19 @@ export default {
 	data() {
 		return {
 			investSum: 5000,
-			limitCurrentType: 'dollar',
+			currentLimitType: 'dollar',
 			isActiveSpoiler: false,
 		}
 	},
 	methods: {
-		changeValue() {
+		updateInvestSum() {
 			this.investSum = +event.target.value;
 			if (this.investSum > 200000) {
 				this.investSum = 200000;
 			}
 		},
 		updateLimitType() {
-			this.limitCurrentType = event.target.value;
+			this.currentLimitType = event.target.value;
 		},
 		spoilerToggle(){
 			this.isActiveSpoiler = !this.isActiveSpoiler;

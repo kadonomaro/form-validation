@@ -15,7 +15,8 @@
       <input 
 				class="limit-types__radio visually-hidden" 
 				type="radio" 
-				value="dollar" v-model="currentLimit"
+				value="dollar" 
+				v-model="currentLimit"
 				@change="updateLimitsType"
 			/>
 			<span class="limit-types__radio-custom"></span>
