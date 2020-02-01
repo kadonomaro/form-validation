@@ -1,5 +1,5 @@
 <template>
-  <main class="content">
+  <main class="main-layout">
     <app-form></app-form>
   </main>
 </template>
@@ -15,8 +15,12 @@ export default {
 </script>
 
 <style lang="scss">
-    .content {
-      padding: 30px 10px;
-      background-color: #efefef;
+    .main-layout {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #f1f6fd;
+      box-sizing: border-box;
     }
 </style>
