@@ -19,9 +19,10 @@
 					:class="{'app-form__spoiler-toggle--active': isActiveSpoiler}"
 					@click="spoilerToggle"
 				>Ограничить прибыль и убыток</span>
-				<transition name="slide-down">
+				<transition name="slide">
 					<div class="app-form__spoiler" v-if="isActiveSpoiler">
-						<label class="app-form__field">
+
+						<label class="app-form__field app-form__field--indent">
 							<span class="app-form__caption">Ограничения в</span>
 							<limit-types-input 
 								@limitsType="updateLimitType"
@@ -44,8 +45,20 @@
 								:initialValue="investSum"
 							/>
 						</div>
+
 					</div>
 				</transition>
+
+				<div class="app-form__field">
+					<send-button 
+						:type="'reduction'"
+						:title="'В снижение'"
+					/>
+					<send-button 
+						:type="'growth'"
+						:title="'В рост'"
+					/>
+				</div>
 
 			</form>
 		</div>
@@ -57,6 +70,8 @@ import SumInvestInput from '@/components/blocks/SumInvestInput.vue';
 import MultInvestInput from '@/components/blocks/MultInvestInput.vue';
 import LimitTypesInput from '@/components/blocks/LimitTypesInput.vue';
 import LimitValueInput from '@/components/blocks/LimitValueInput.vue';
+import SendButton from '@/components/blocks/SendButton.vue';
+
 
 export default {
 	name: 'AppForm',
@@ -64,7 +79,8 @@ export default {
 		SumInvestInput,
 		MultInvestInput,
 		LimitTypesInput,
-		LimitValueInput
+		LimitValueInput,
+		SendButton
 	},
 	props: {
 
@@ -116,10 +132,13 @@ export default {
 			align-items: center;
 			margin-bottom: 8px;
 		}
+		&__field--indent {
+			margin-bottom: 12px;
+		}
 		&__spoiler-toggle {
 			position: relative;
 			display: block;
-			margin-top: 25px;
+			margin: 25px 0 20px;
 			color: #909294;
 			font-size: 13px;
 			cursor: pointer;
@@ -141,9 +160,6 @@ export default {
 				transform: translateY(40%) rotate(135deg);
 			}
 		}
-		&__spoiler {
-			padding-top: 20px;
-		}
 		&__caption {
 			display: block;
 			margin-right: 5px;
@@ -151,12 +167,20 @@ export default {
 			font-weight: bold;
 		}
 
-		.slide-down-enter-active, .slide-down-leave-active {
-			transition: opacity .5s;
-		}
-		.slide-down-enter, .slide-down-leave-to {
-			opacity: 0;
-		}
 
+		.slide-enter-active {
+			transition: all 0.3s ease-in;
+		}
+		.slide-leave-active {
+			transition: all 0.3s cubic-bezier(0, 1, 0.5, 1);
+		}
+		.slide-enter-to, .slide-leave {
+			max-height: 100px;
+			overflow: hidden;
+		}
+		.slide-enter, .slide-leave-to {
+			overflow: hidden;
+			max-height: 0;
+		}
 	}
 </style>

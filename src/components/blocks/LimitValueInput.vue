@@ -106,9 +106,11 @@ export default {
 		},
 		initialValue() {
 			if (this.limitType === 'dollar') {
+				//integer validation
 				if ((this.initialValue * 0.3) === parseInt((this.initialValue * 0.3), 10)) {
 					this.value = this.initialValue * 0.3;
 				} else {
+					//fixed zero if number is not integer
 					this.value = (this.initialValue * 0.3).toFixed(2);
 				}
 			}
