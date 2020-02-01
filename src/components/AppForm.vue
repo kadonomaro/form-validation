@@ -5,14 +5,14 @@
 		</header>
 		<div class="app-form__body">
 			<form action="">
-				<div class="app-form__field">
+				<label class="app-form__field">
 					<span class="app-form__caption">Сумма инвестиции</span>
 					<sum-invest-input />
-				</div>
-				<div class="app-form__field">
+				</label>
+				<label class="app-form__field">
 					<span class="app-form__caption">Мультипликатор</span>
 					<mult-invest-input :factSum="10000" />
-				</div>
+				</label>
 			</form>
 		</div>
 	</div>
