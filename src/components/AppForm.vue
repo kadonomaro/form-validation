@@ -34,6 +34,7 @@
 							<limit-value-input 
 								:title="'Прибыль'"
 								:limitType="currentLimitType"
+								:type="'profit'"
 								:initialValue="formData.sumInv"
 							/>
 						</div>
@@ -42,6 +43,7 @@
 							<limit-value-input 
 								:title="'Убыток'"
 								:limitType="currentLimitType"
+								:type="'loss'"
 								:initialValue="formData.sumInv"
 							/>
 						</div>
@@ -89,7 +91,7 @@ export default {
 		return {
 			currentLimitType: 'dollar',
 			isActiveSpoiler: false,
-			
+
 			formData: {
 				sumInv: 5000,
 				mult: 40,

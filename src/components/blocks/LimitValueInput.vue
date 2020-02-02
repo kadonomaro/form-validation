@@ -57,6 +57,10 @@ export default {
 			type: String,
 			required: true
 		},
+		type: {
+			type: String,
+			required: true
+		},
 		initialValue: {
 			type: Number,
 			required: true
@@ -102,9 +106,6 @@ export default {
 		setSign() {
 			return (this.limitType === 'dollar') ? '$' : '%';
 		},
-		// validate() {
-		// 	return this.limitType === 'percent' && this.value < 10;
-		// }
 	},
 	watch: {
 		limitType() {
@@ -130,19 +131,32 @@ export default {
 		value() {
 			switch (this.limitType) {
 				case 'percent':
+
 					if (this.value < 10) {
 						this.isValid = false;
 						this.errorMessage = 'Не может быть меньше 10%'
 					} else {
 						this.isValid = true;
 					}
+
+					if (this.type === 'loss' && this.value > 100) {
+						this.isValid = false;
+						this.errorMessage = 'Не может быть больше 100%';
+					}
+
 					break;
 				case 'dollar':
+
 					if (this.value < (this.initialValue / 10)) {
 						this.isValid = false;
 						this.errorMessage = 'Не может быть меньше $ ' + this.initialValue / 10;
 					} else {
 						this.isValid = true;
+					}
+
+					if (this.type === 'loss' && (this.value > this.initialValue)) {
+						this.isValid = false;
+						this.errorMessage = 'Не может быть больше $ ' + this.initialValue;
 					}
 					break;
 			}
