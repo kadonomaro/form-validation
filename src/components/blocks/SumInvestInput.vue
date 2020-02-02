@@ -2,14 +2,14 @@
   <label class="input-label" data-sign="$">
     <input 
       class="input sum-invest-input"
-      :class="{ 'input--error': !isValid }"
+      :class="{ 'input--error': validate }"
       type="text" 
       @input="updateInvestValue(+$event.target.value)"
       v-model="value"
     />
     <app-tooltip 
       :message="'Минимальная сумма инвестиции $ 100'"
-      :isActive="!isValid"
+      :isActive="validate"
     />
   </label>
 </template>
@@ -39,16 +39,11 @@ export default {
       this.$emit('changeValue', this.value);
     },
   },
-  watch: {
-    value() {
-      if (this.value < 100) {
-        this.isValid = false;
-      } else {
-        this.isValid = true;
-      }
+  computed: {
+    validate() {
+      return this.value < 100;
     }
   }
-
 };
 </script>
 

@@ -2,7 +2,7 @@
   <label class="input-label" data-sign="x">
     <input 
       class="input mult-invest-input"
-      :class="{ 'input--error': !isValid }"
+      :class="{ 'input--error': validate }"
       type="text" 
       v-model="multiplyValue"
       @input="updateMultiplyValue(+$event.target.value)"
@@ -10,7 +10,7 @@
     />
     <app-tooltip 
       :message="'Неверное значение мультипликатора'"
-      :isActive="!isValid"
+      :isActive="validate"
     />
     <span 
       class="mult-invest-sum" 
@@ -75,15 +75,9 @@ export default {
   computed: {
     isLong() {
       return (this.sum * this.multiplyValue).toString().length > 6;
-    }
-  },
-  watch: {
-    multiplyValue() {
-      if (this.multiplyValue < 1 || this.multiplyValue > 40) {
-        this.isValid = false;
-      } else {
-        this.isValid = true;
-      }
+    },
+    validate() {
+      return this.multiplyValue < 1 || this.multiplyValue > 40;
     }
   }
 };

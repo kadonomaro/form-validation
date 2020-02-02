@@ -15,33 +15,13 @@ export default {
 		isActive: {
 			type: Boolean,
 			required: true
-		},
-		timeout: {
-			type: Number,
-			required: false
 		}
-
 	},
 	data() {
 		return {
 			
 		}
 	},
-	mounted() {
-		this.deactivate();
-	},
-	methods: {
-		deactivate() {
-			setTimeout(() => {
-				this.isEnabled = this.isActive;
-			}, this.timeout || 1000);
-		}
-	},
-	watch: {
-		isActive() {
-			this.isEnabled = this.isActive;
-		}
-	}
 }
 </script>
 
