@@ -7,14 +7,14 @@
 			<form action="">
 				<label class="app-form__field">
 					<span class="app-form__caption">Сумма инвестиции</span>
-					<sum-invest-input @changeValue="updateInvestSum" />
+					<sum-invest-input @change-value="updateInvestSum" />
 				</label>
 				<label class="app-form__field">
 					<span class="app-form__caption">Мультипликатор</span>
-					<mult-invest-input :sum="formData.sumInv" @changeValue="updateInvestMult" />
+					<mult-invest-input :sum="formData.sumInv" @change-value="updateInvestMult" />
 				</label>
 
-				<span 
+				<span
 					class="app-form__spoiler-toggle"
 					:class="{'app-form__spoiler-toggle--active': isActiveSpoiler}"
 					@click="spoilerToggle"
@@ -24,29 +24,29 @@
 
 						<label class="app-form__field app-form__field--indent">
 							<span class="app-form__caption">Ограничения в</span>
-							<limit-types-input 
-								@limitsType="updateLimitType"
+							<limit-types-input
+								@limits-type="updateLimitType"
 								:limitType="currentLimitType"
 							/>
 						</label>
 
 						<div class="app-form__field">
-							<limit-value-input 
+							<limit-value-input
 								:title="'Прибыль'"
 								:limitType="currentLimitType"
 								:type="'profit'"
 								:initialValue="formData.sumInv"
-								@changeValue="updateLimitValue"
+								@change-value="updateLimitValue"
 							/>
 						</div>
 
 						<div class="app-form__field app-form__field--indent">
-							<limit-value-input 
+							<limit-value-input
 								:title="'Убыток'"
 								:limitType="currentLimitType"
 								:type="'loss'"
 								:initialValue="formData.sumInv"
-								@changeValue="updateLimitValue"
+								@change-value="updateLimitValue"
 							/>
 						</div>
 
@@ -54,13 +54,15 @@
 				</transition>
 
 				<div class="app-form__field app-form__field--inner-indent">
-					<send-button 
+					<send-button
 						:buttonType="'reduction'"
 						:title="'В снижение'"
+						@send-request="sendRequest"
 					/>
-					<send-button 
+					<send-button
 						:buttonType="'growth'"
 						:title="'В рост'"
+						@send-request="sendRequest "
 					/>
 				</div>
 
@@ -93,6 +95,7 @@ export default {
 		return {
 			currentLimitType: 'dollar',
 			isActiveSpoiler: false,
+			isFormValid: null,
 
 			formData: {
 				sumInv: 5000,
@@ -104,23 +107,31 @@ export default {
 		}
 	},
 	methods: {
-		updateInvestSum() {
-			this.formData.sumInv = +event.target.value;
+		updateInvestSum(value, isValid) {
+			this.formData.sumInv = value;
 			if (this.formData.sumInv > 200000) {
 				this.formData.sumInv = 200000;
 			}
 		},
-		updateInvestMult() {
-			this.formData.mult = +event.target.value;
+		updateInvestMult(value, isValid) {
+			this.formData.mult = value;
 		},
-		updateLimitType() {
-			this.currentLimitType = event.target.value;
+		updateLimitType(value) {
+			this.currentLimitType = value;
 		},
-		updateLimitValue(payload, type) {
+		updateLimitValue(value, type, isValid) {
 			if (type === 'profit') {
-				this.formData.takeProfit = payload;
+				this.formData.takeProfit = value;
+				console.log(isValid);
 			} else {
-				this.formData.stopLoss = payload
+				this.formData.stopLoss = value;
+				console.log(isValid);
+			}
+		},
+		sendRequest(direction) {
+			this.formData.direction = direction;
+			if (this.isFormValid) {
+				console.log(this.formData);
 			}
 		},
 		spoilerToggle(){

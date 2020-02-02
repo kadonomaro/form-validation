@@ -41,7 +41,7 @@ export default {
   },
   methods: {
 		updateLimitsType() {
-			this.$emit('limitsType', this.currentLimit);
+			this.$emit('limits-type', this.currentLimit);
 		}
 	}
 };

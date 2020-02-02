@@ -1,19 +1,19 @@
 <template>
   <label class="input-label" data-sign="x">
-    <input 
+    <input
       class="input mult-invest-input"
       :class="{ 'input--error': validate }"
-      type="text" 
+      type="text"
       v-model="multiplyValue"
       @input="updateMultiplyValue(+$event.target.value)"
-      @focus="isRangeVisible = true" 
+      @focus="isRangeVisible = true"
     />
-    <app-tooltip 
+    <app-tooltip
       :message="'Неверное значение мультипликатора'"
       :isActive="validate"
     />
-    <span 
-      class="mult-invest-sum" 
+    <span
+      class="mult-invest-sum"
       :class="{'mult-invest-sum--small': isLong}"
       >= $ {{ sum * multiplyValue || 0 }}
     </span>
@@ -35,7 +35,7 @@
       </div>
     </div>
   </label>
-  
+
 </template>
 
 <script>
@@ -56,7 +56,6 @@ export default {
     return {
       isRangeVisible: false,
       multiplyValue: 40,
-      isValid: true
     };
   },
   methods: {
@@ -70,7 +69,7 @@ export default {
         value = 99;
       }
       this.multiplyValue = +value.toString().replace(/[A-Z a-z]/g, '');
-      this.$emit('changeValue', this.multiplyValue);
+      this.$emit('change-value', this.multiplyValue, !this.validate);
     }
   },
   computed: {

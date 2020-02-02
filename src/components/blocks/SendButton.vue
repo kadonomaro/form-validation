@@ -2,6 +2,7 @@
   <button 
     class="send-button"
     :class="buttonType ? 'send-button--' + buttonType : ''"
+    @click.prevent="send"
   ><span class="send-button__inner">{{ title }}</span></button>
 </template>
 
@@ -18,6 +19,11 @@ export default {
         required: true
       }
     },
+    methods: {
+      send() {
+        this.$emit('send-request', this.buttonType);
+      }
+    }
 }
 </script>
 

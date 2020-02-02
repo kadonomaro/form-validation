@@ -1,13 +1,13 @@
 <template>
   <label class="input-label" data-sign="$">
-    <input 
+    <input
       class="input sum-invest-input"
       :class="{ 'input--error': validate }"
-      type="text" 
+      type="text"
       @input="updateInvestValue(+$event.target.value)"
       v-model="value"
     />
-    <app-tooltip 
+    <app-tooltip
       :message="'Минимальная сумма инвестиции $ 100'"
       :isActive="validate"
     />
@@ -36,7 +36,7 @@ export default {
         value = 200000;
       }
       this.value = +value.toString().replace(/[A-Z a-z]/g, '');
-      this.$emit('changeValue', this.value);
+      this.$emit('change-value', this.value, !this.validate);
     },
   },
   computed: {

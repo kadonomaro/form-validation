@@ -1,8 +1,8 @@
 <template>
   <div class="limit-value">
 		<label class="limit-value__label">
-			<input 
-				class="limit-value__checkbox visually-hidden" 
+			<input
+				class="limit-value__checkbox visually-hidden"
 				type="checkbox"
 				@change="disabled = !disabled"
 			>
@@ -10,7 +10,7 @@
 			<span class="limit-value__title">{{ title }}</span>
 		</label>
 		<label class="input-label" :data-sign="setSign">
-			<input 
+			<input
 				class="input input--button limit-value__input"
 				:class="{'input--disabled': disabled, 'input--error': !isValid}"
 				type="text"
@@ -18,19 +18,19 @@
 				v-model="value"
 				@input="updateLimitValue(+$event.target.value)"
 			/>
-			<app-tooltip 
+			<app-tooltip
 				:message="errorMessage"
 				:isActive="!isValid"
 			/>
 			<div class="limit-value__buttons">
-				<button 
-					class="limit-value__button limit-value__button--up" 
+				<button
+					class="limit-value__button limit-value__button--up"
 					:class="{'limit-value__button--disabled': disabled}"
 					:disabled="disabled"
 					@click.prevent="increaseValue"
 				></button>
-				<button 
-					class="limit-value__button limit-value__button--down" 
+				<button
+					class="limit-value__button limit-value__button--down"
 					:class="{ 'limit-value__button--disabled': disabled }"
 					:disabled="disabled"
 					@click.prevent="decreaseValue"
@@ -101,10 +101,10 @@ export default {
       if (value < 0) {
         value = 0;
       }
-      this.value = +value.toString().replace(/[A-Z a-z]/g, '');	
+      this.value = +value.toString().replace(/[A-Z a-z]/g, '');
 		},
 		emitChange() {
-			this.$emit('changeValue', this.limitType === 'dollar' ? this.value : (this.initialValue * this.value / 100), this.type);
+			this.$emit('change-value', this.limitType === 'dollar' ? this.value : (this.initialValue * this.value / 100), this.type, this.isValid);
 		}
 	},
 	computed: {
