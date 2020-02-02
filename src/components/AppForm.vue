@@ -78,6 +78,7 @@ import LimitTypesInput from '@/components/blocks/LimitTypesInput.vue';
 import LimitValueInput from '@/components/blocks/LimitValueInput.vue';
 import SendButton from '@/components/blocks/SendButton.vue';
 
+import axios from 'axios';
 
 export default {
 	name: 'AppForm',
@@ -109,7 +110,9 @@ export default {
 				mult: true,
 				takeProfit: true,
 				stopLoss: true
-			}
+			},
+
+			serverUrl: 'https://jsonplaceholder.typicode.com/posts',
 		}
 	},
 	methods: {
@@ -139,9 +142,14 @@ export default {
 		sendRequest(direction) {
 			this.formData.direction = direction;
 			if (Object.values(this.formSendValidation).every(Boolean)) {
-				console.log(this.formData);
+				axios.post(this.serverUrl, JSON.stringify(this.formData))
+					.then((response) => {
+						console.log(response.data);
+					})
+					.catch((error) => {
+						console.error(error);
+					})
 			}
-
 		},
 		spoilerToggle(){
 			this.isActiveSpoiler = !this.isActiveSpoiler;
