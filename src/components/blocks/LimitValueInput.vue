@@ -66,8 +66,6 @@ export default {
 		return {
 			disabled: true,
 			value: 0,
-			percentValue: 0,
-			dollarValue: 0,
 			step: 10,
 			errorMessage: '',
 			isValid: true
