@@ -4,7 +4,7 @@
       class="input sum-invest-input"
       :class="{ 'input--error': validate }"
       type="text"
-      @input="updateInvestValue(+$event.target.value)"
+      @input.lazy="updateInvestValue(+$event.target.value)"
       v-model="value"
     />
     <app-tooltip

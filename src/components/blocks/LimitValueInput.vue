@@ -104,7 +104,7 @@ export default {
       this.value = +value.toString().replace(/[A-Z a-z]/g, '');
 		},
 		emitChange() {
-			this.$emit('change-value', this.limitType === 'dollar' ? this.value : (this.initialValue * this.value / 100), this.type, this.isValid);
+			this.$emit('change-value', this.limitType === 'dollar' ? this.value : +(this.initialValue * this.value / 100).toFixed(0), this.type, this.isValid);
 		}
 	},
 	computed: {

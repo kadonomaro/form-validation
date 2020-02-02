@@ -95,7 +95,6 @@ export default {
 		return {
 			currentLimitType: 'dollar',
 			isActiveSpoiler: false,
-			isFormValid: null,
 
 			formData: {
 				sumInv: 5000,
@@ -103,18 +102,27 @@ export default {
 				takeProfit: 0,
 				stopLoss: 0,
 				direction: ''
+			},
+
+			formSendValidation: {
+				sumInv: true,
+				mult: true,
+				takeProfit: true,
+				stopLoss: true
 			}
 		}
 	},
 	methods: {
 		updateInvestSum(value, isValid) {
 			this.formData.sumInv = value;
+			this.formSendValidation.sumInv = isValid;
 			if (this.formData.sumInv > 200000) {
 				this.formData.sumInv = 200000;
 			}
 		},
 		updateInvestMult(value, isValid) {
 			this.formData.mult = value;
+			this.formSendValidation.mult = isValid;
 		},
 		updateLimitType(value) {
 			this.currentLimitType = value;
@@ -122,17 +130,18 @@ export default {
 		updateLimitValue(value, type, isValid) {
 			if (type === 'profit') {
 				this.formData.takeProfit = value;
-				console.log(isValid);
+				this.formSendValidation.takeProfit = isValid;
 			} else {
 				this.formData.stopLoss = value;
-				console.log(isValid);
+				this.formSendValidation.stopLoss = isValid;
 			}
 		},
 		sendRequest(direction) {
 			this.formData.direction = direction;
-			if (this.isFormValid) {
+			if (Object.values(this.formSendValidation).every(val => val === true)) {
 				console.log(this.formData);
 			}
+
 		},
 		spoilerToggle(){
 			this.isActiveSpoiler = !this.isActiveSpoiler;
