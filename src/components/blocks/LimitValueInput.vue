@@ -88,9 +88,11 @@ export default {
 		},
 		increaseValue() {
 			this.value += this.step;
+			this.emitChange();
 		},
 		decreaseValue() {
 			this.value -= this.step;
+			this.emitChange();
 			if (this.value < 0) {
 				this.value = 0;
 			}
@@ -100,7 +102,10 @@ export default {
         value = 0;
       }
       this.value = +value.toString().replace(/[A-Z a-z]/g, '');	
-    }
+		},
+		emitChange() {
+			this.$emit('changeValue', this.limitType === 'dollar' ? this.value : (this.initialValue * this.value / 100), this.type);
+		}
 	},
 	computed: {
 		setSign() {

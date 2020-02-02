@@ -36,6 +36,7 @@
 								:limitType="currentLimitType"
 								:type="'profit'"
 								:initialValue="formData.sumInv"
+								@changeValue="updateLimitValue"
 							/>
 						</div>
 
@@ -45,6 +46,7 @@
 								:limitType="currentLimitType"
 								:type="'loss'"
 								:initialValue="formData.sumInv"
+								@changeValue="updateLimitValue"
 							/>
 						</div>
 
@@ -113,6 +115,13 @@ export default {
 		},
 		updateLimitType() {
 			this.currentLimitType = event.target.value;
+		},
+		updateLimitValue(payload, type) {
+			if (type === 'profit') {
+				this.formData.takeProfit = payload;
+			} else {
+				this.formData.stopLoss = payload
+			}
 		},
 		spoilerToggle(){
 			this.isActiveSpoiler = !this.isActiveSpoiler;

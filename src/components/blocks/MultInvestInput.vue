@@ -103,7 +103,7 @@ export default {
 .mult-invest-range {
   position: absolute;
   z-index: 99;
-  bottom: -63px;
+  bottom: -70px;
   left: -150px;
   width: 280px;
   padding: 10px 25px;
@@ -124,6 +124,7 @@ export default {
   }
   &__slider {
     width: 100%;
+    margin-bottom: 10px;
   }
   &__tick-list {
     position: relative;
