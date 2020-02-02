@@ -4,7 +4,7 @@
       class="input sum-invest-input"
       :class="{ 'input--error': validate }"
       type="text"
-      @input.lazy="updateInvestValue(+$event.target.value)"
+      @input="updateInvestValue(+$event.target.value)"
       v-model="value"
     />
     <app-tooltip
@@ -43,7 +43,13 @@ export default {
     validate() {
       return this.value < 100;
     }
-  }
+	},
+	// watch: {
+	// 	value(newValue) {
+	// 		const result = newValue.toString().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	// 		this.$nextTick(() => this.value = result);
+	// 	}
+	// }
 };
 </script>
 

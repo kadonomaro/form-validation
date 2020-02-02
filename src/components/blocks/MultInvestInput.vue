@@ -15,7 +15,7 @@
     <span
       class="mult-invest-sum"
       :class="{'mult-invest-sum--small': isLong}"
-      >= $ {{ sum * multiplyValue || 0 }}
+      >= $ {{ (sum * multiplyValue || 0) | currency}}
     </span>
     <div v-if="isRangeVisible" v-escape="close" class="mult-invest-range">
       <input
@@ -85,7 +85,7 @@ export default {
 
 <style lang="scss">
 .mult-invest-input {
-  max-width: 56px;
+  max-width: 50px;
   box-sizing: border-box;
 }
 .mult-invest-sum {

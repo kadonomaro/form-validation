@@ -138,7 +138,7 @@ export default {
 		},
 		sendRequest(direction) {
 			this.formData.direction = direction;
-			if (Object.values(this.formSendValidation).every(val => val === true)) {
+			if (Object.values(this.formSendValidation).every(Boolean)) {
 				console.log(this.formData);
 			}
 
