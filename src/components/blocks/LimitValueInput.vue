@@ -12,11 +12,15 @@
 		<label class="input-label" :data-sign="setSign">
 			<input 
 				class="input input--button limit-value__input"
-				:class="{'input--disabled': disabled}"
+				:class="{'input--disabled': disabled, 'input--error': !isValid}"
 				type="text"
 				:disabled="disabled"
 				v-model="value"
 				@input="updateLimitValue(+$event.target.value)"
+			/>
+			<app-tooltip 
+				:message="errorMessage"
+				:isActive="!isValid"
 			/>
 			<div class="limit-value__buttons">
 				<button 
@@ -37,8 +41,13 @@
 </template>
 
 <script>
+import AppTooltip from '@/components/blocks/AppTooltip.vue';
+
 export default {
-  name: "LimitValueInput",
+	name: "LimitValueInput",
+	components: {
+		AppTooltip
+	},
   props: {
 		title: {
 			type: String,
@@ -59,7 +68,9 @@ export default {
 			value: 0,
 			percentValue: 0,
 			dollarValue: 0,
-			step: 10
+			step: 10,
+			errorMessage: '',
+			isValid: true
 		}
 	},
 	mounted() {
@@ -92,7 +103,10 @@ export default {
 	computed: {
 		setSign() {
 			return (this.limitType === 'dollar') ? '$' : '%';
-		}
+		},
+		// validate() {
+		// 	return this.limitType === 'percent' && this.value < 10;
+		// }
 	},
 	watch: {
 		limitType() {
@@ -113,6 +127,26 @@ export default {
 					//fixed zero if number is not integer
 					this.value = (this.initialValue * 0.3).toFixed(2);
 				}
+			}
+		},
+		value() {
+			switch (this.limitType) {
+				case 'percent':
+					if (this.value < 10) {
+						this.isValid = false;
+						this.errorMessage = 'Не может быть меньше 10%'
+					} else {
+						this.isValid = true;
+					}
+					break;
+				case 'dollar':
+					if (this.value < (this.initialValue / 10)) {
+						this.isValid = false;
+						this.errorMessage = 'Не может быть меньше $ ' + this.initialValue / 10;
+					} else {
+						this.isValid = true;
+					}
+					break;
 			}
 		}
 	}

@@ -70,6 +70,7 @@ export default {
         value = 99;
       }
       this.multiplyValue = +value.toString().replace(/[A-Z a-z]/g, '');
+      this.$emit('changeValue', this.multiplyValue);
     }
   },
   computed: {

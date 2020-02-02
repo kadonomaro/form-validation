@@ -11,7 +11,7 @@
 				</label>
 				<label class="app-form__field">
 					<span class="app-form__caption">Мультипликатор</span>
-					<mult-invest-input :sum="investSum" />
+					<mult-invest-input :sum="formData.sumInv" @changeValue="updateInvestMult" />
 				</label>
 
 				<span 
@@ -34,7 +34,7 @@
 							<limit-value-input 
 								:title="'Прибыль'"
 								:limitType="currentLimitType"
-								:initialValue="investSum"
+								:initialValue="formData.sumInv"
 							/>
 						</div>
 
@@ -42,7 +42,7 @@
 							<limit-value-input 
 								:title="'Убыток'"
 								:limitType="currentLimitType"
-								:initialValue="investSum"
+								:initialValue="formData.sumInv"
 							/>
 						</div>
 
@@ -87,12 +87,12 @@ export default {
 	},
 	data() {
 		return {
-			investSum: 5000,
 			currentLimitType: 'dollar',
 			isActiveSpoiler: false,
+			
 			formData: {
 				sumInv: 5000,
-				mult: 0,
+				mult: 40,
 				takeProfit: 0,
 				stopLoss: 0,
 				direction: ''
@@ -101,10 +101,13 @@ export default {
 	},
 	methods: {
 		updateInvestSum() {
-			this.investSum = +event.target.value;
-			if (this.investSum > 200000) {
-				this.investSum = 200000;
+			this.formData.sumInv = +event.target.value;
+			if (this.formData.sumInv > 200000) {
+				this.formData.sumInv = 200000;
 			}
+		},
+		updateInvestMult() {
+			this.formData.mult = +event.target.value;
 		},
 		updateLimitType() {
 			this.currentLimitType = event.target.value;
