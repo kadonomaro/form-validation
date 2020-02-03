@@ -119,7 +119,7 @@ export default {
 				loss: false,
 			},
 
-			serverUrl: '/server.php',
+			serverUrl: 'https://jsonplaceholder.typicode.com/posts',
 		}
 	},
 	methods: {
@@ -152,25 +152,24 @@ export default {
 		sendRequest(direction) {
 			this.formData.direction = direction;
 			if (Object.values(this.formSendValidation).every(Boolean)) {
-				console.log({
-					sumInv: this.formData.sumInv,
-					mult: this.formData.mult,
-					...(this.limitState.profit) && {takeProfit: this.formData.takeProfit},
-					...(this.limitState.loss) && {stopLoss: this.formData.stopLoss},
-					direction: this.formData.direction
+				axios({
+					method: 'post',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					url: this.serverUrl,
+					data: {
+						sumInv: this.formData.sumInv,
+						mult: this.formData.mult,
+						...(this.limitState.profit) && {takeProfit: this.formData.takeProfit},
+						...(this.limitState.loss) && {stopLoss: this.formData.stopLoss},
+						direction: this.formData.direction
+					}
+				})
+				.then(function(response) {
+					console.log(response.data);
+				})
+				.catch(function (error) {
+					console.log(error);
 				});
-				// axios({
-				// 	method: 'post',
-				// 	headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				// 	url: this.serverUrl,
-				// 	data: this.formData
-				// })
-				// .then(function(response) {
-				// 	console.log(response.data);
-				// })
-				// .catch(function (error) {
-				// 	console.log(error);
-				// });
 			}
 		},
 		spoilerToggle(){
