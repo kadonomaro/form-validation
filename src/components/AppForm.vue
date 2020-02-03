@@ -37,6 +37,7 @@
 								:type="'profit'"
 								:initialValue="formData.sumInv"
 								@change-value="updateLimitValue"
+								@active-state="updateLimitState"
 							/>
 						</div>
 
@@ -47,6 +48,7 @@
 								:type="'loss'"
 								:initialValue="formData.sumInv"
 								@change-value="updateLimitValue"
+								@active-state="updateLimitState"
 							/>
 						</div>
 
@@ -112,7 +114,12 @@ export default {
 				stopLoss: true
 			},
 
-			serverUrl: 'https://jsonplaceholder.typicode.com/posts',
+			limitState: {
+				profit: false,
+				loss: false,
+			},
+
+			serverUrl: '/server.php',
 		}
 	},
 	methods: {
@@ -130,6 +137,9 @@ export default {
 		updateLimitType(value) {
 			this.currentLimitType = value;
 		},
+		updateLimitState(value, type) {
+			this.limitState[type] = value;
+		},
 		updateLimitValue(value, type, isValid) {
 			if (type === 'profit') {
 				this.formData.takeProfit = value;
@@ -142,13 +152,25 @@ export default {
 		sendRequest(direction) {
 			this.formData.direction = direction;
 			if (Object.values(this.formSendValidation).every(Boolean)) {
-				axios.post(this.serverUrl, JSON.stringify(this.formData))
-					.then((response) => {
-						console.log(response.data);
-					})
-					.catch((error) => {
-						console.error(error);
-					})
+				console.log({
+					sumInv: this.formData.sumInv,
+					mult: this.formData.mult,
+					takeProfit: this.limitState.profit ? this.formData.takeProfit : null,
+					stopLoss: this.limitState.loss ? this.formData.stopLoss : null,
+					direction: this.formData.direction
+				});
+				// axios({
+				// 	method: 'post',
+				// 	headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				// 	url: this.serverUrl,
+				// 	data: this.formData
+				// })
+				// .then(function(response) {
+				// 	console.log(response.data);
+				// })
+				// .catch(function (error) {
+				// 	console.log(error);
+				// });
 			}
 		},
 		spoilerToggle(){

@@ -4,7 +4,7 @@
 			<input
 				class="limit-value__checkbox visually-hidden"
 				type="checkbox"
-				@change="disabled = !disabled"
+				@change="toggleState"
 			>
 			<span class="limit-value__checkbox-custom"></span>
 			<span class="limit-value__title">{{ title }}</span>
@@ -12,9 +12,9 @@
 		<label class="input-label" :data-sign="setSign">
 			<input
 				class="input input--button limit-value__input"
-				:class="{'input--disabled': disabled, 'input--error': !isValid}"
+				:class="{'input--disabled': isDisabled, 'input--error': !isValid}"
 				type="text"
-				:disabled="disabled"
+				:disabled="isDisabled"
 				v-model="value"
 				@input="updateLimitValue(+$event.target.value)"
 			/>
@@ -25,14 +25,14 @@
 			<div class="limit-value__buttons">
 				<button
 					class="limit-value__button limit-value__button--up"
-					:class="{'limit-value__button--disabled': disabled}"
-					:disabled="disabled"
+					:class="{'limit-value__button--disabled': isDisabled}"
+					:disabled="isDisabled"
 					@click.prevent="increaseValue"
 				></button>
 				<button
 					class="limit-value__button limit-value__button--down"
-					:class="{ 'limit-value__button--disabled': disabled }"
-					:disabled="disabled"
+					:class="{ 'limit-value__button--disabled': isDisabled }"
+					:disabled="isDisabled"
 					@click.prevent="decreaseValue"
 				></button>
 			</div>
@@ -68,7 +68,7 @@ export default {
 	},
 	data() {
 		return {
-			disabled: true,
+			isDisabled: true,
 			value: 0,
 			step: 10,
 			errorMessage: '',
@@ -85,6 +85,10 @@ export default {
 			}	else {
 				this.value = 30;
 			}
+		},
+		toggleState(){
+			this.isDisabled = !this.isDisabled;
+			this.$emit('active-state', !this.isDisabled, this.type);
 		},
 		increaseValue() {
 			this.value += this.step;

@@ -6,7 +6,7 @@
       type="text"
       v-model="multiplyValue"
       @input="updateMultiplyValue(+$event.target.value)"
-      @focus="isRangeVisible = true"
+      @focus="openSlider"
     />
     <app-tooltip
       :message="'Неверное значение мультипликатора'"
@@ -17,7 +17,7 @@
       :class="{'mult-invest-sum--small': isLong}"
       >= $ {{ (sum * multiplyValue || 0) | currency}}
     </span>
-    <div v-if="isRangeVisible" v-escape="close" class="mult-invest-range">
+    <div v-if="isRangeVisible" v-escape="closeSlider" class="mult-invest-range">
       <input
         class="mult-invest-range__slider"
         type="range"
@@ -59,7 +59,10 @@ export default {
     };
   },
   methods: {
-    close() {
+		openSlider() {
+			this.isRangeVisible = true;
+		},
+    closeSlider() {
       this.isRangeVisible = false;
     },
     updateMultiplyValue(value) {
