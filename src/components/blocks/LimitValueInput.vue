@@ -77,6 +77,10 @@ export default {
 	},
 	mounted() {
 		this.setInitialValue();
+		this.emitChange();
+	},
+	updated() {
+		this.emitChange();
 	},
 	methods: {
 		setInitialValue() {

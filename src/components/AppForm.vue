@@ -155,8 +155,8 @@ export default {
 				console.log({
 					sumInv: this.formData.sumInv,
 					mult: this.formData.mult,
-					takeProfit: this.limitState.profit ? this.formData.takeProfit : null,
-					stopLoss: this.limitState.loss ? this.formData.stopLoss : null,
+					...(this.limitState.profit) && {takeProfit: this.formData.takeProfit},
+					...(this.limitState.loss) && {stopLoss: this.formData.stopLoss},
 					direction: this.formData.direction
 				});
 				// axios({
