@@ -12,7 +12,7 @@
 		<label class="input-label" :data-sign="setSign">
 			<input
 				class="input input--button limit-value__input"
-				:class="{'input--disabled': isDisabled, 'input--error': !isValid}"
+				:class="{'input--disabled': isDisabled, 'input--error': !isValid && !isDisabled}"
 				type="text"
 				:disabled="isDisabled"
 				v-model="value"
@@ -20,7 +20,7 @@
 			/>
 			<app-tooltip
 				:message="errorMessage"
-				:isActive="!isValid"
+				:isActive="!isValid && !isDisabled"
 			/>
 			<div class="limit-value__buttons">
 				<button
